@@ -11,21 +11,19 @@ public class Gesamtverdienst extends Table {
 
     @Override
     public String getSelectQueryForTableWithFilter(String s) throws SQLException {
-        throw new SQLException(getClass().getName() + ".getSelectQueryForTableWithFilter(Data) nicht implementiert.");
+        //throw new SQLException(getClass().getName() + ".getSelectQueryForTableWithFilter(Data) nicht implementiert.");
 
-        // Anfrage wie folgt: Transaktionsbetrag komplett aus DB nehmen, dafür Preis von Autor minus Gutscheinbetrag
-
-        /*
+        // Vielleicht noch Überschrift der Zeile von "(sum(Autor.Preis) - sum(Transaktion.Gutschein))" auf Gesamtverdienst ändern und den Betrag auf 2 Nachkommastellen runden.
         String selectQuery;
 
         if ((Integer) Project.getInstance().getData().get("permission") == 1) {
             throw  new SQLException("Nicht die notwendigen Rechte!");
         }
         else {
-            selectQuery = "SELECT AutorBenutzerE_Mail_Adresse, sum(Transaktionsbetrag) FROM Transaktion WHERE AutorBenutzerE_Mail_Adresse = '" + Application.getInstance().getData().get("loginEmail") + "' GROUP BY AutorBenutzerE_Mail_Adresse";
+            selectQuery = "SELECT Autor.BenutzerE_Mail_Adresse, (sum(Autor.Preis) - sum(Transaktion.Gutschein)) FROM Autor INNER JOIN Transaktion ON Autor.BenutzerE_Mail_Adresse = Transaktion.AutorBenutzerE_Mail_Adresse WHERE Autor.BenutzerE_Mail_Adresse = '" + Application.getInstance().getData().get("loginEmail") + "' GROUP BY Autor.BenutzerE_Mail_Adresse";
         }
         return selectQuery;
-        */
+
 
     }
 
