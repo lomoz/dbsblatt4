@@ -3,6 +3,8 @@ package de.hhu.cs.dbs.internship.project.gui;
 import com.alexanderthelen.applicationkit.database.Table;
 import com.alexanderthelen.applicationkit.gui.TableViewController;
 import com.alexanderthelen.applicationkit.gui.ViewController;
+import de.hhu.cs.dbs.internship.project.table.eigeneEinträge.EigeneEinträge;
+import de.hhu.cs.dbs.internship.project.table.eigeneSeiten.EigeneSeiten;
 import de.hhu.cs.dbs.internship.project.table.seitenGekauft.SeitenGekauft;
 import de.hhu.cs.dbs.internship.project.table.account.Account;
 import de.hhu.cs.dbs.internship.project.table.autor.Autor;
@@ -89,7 +91,20 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         treeItem.setExpanded(true);
         treeItems.add(treeItem);
 
-        //SeitenPublic
+        //EigeneSeite
+        table = new EigeneSeiten();
+        table.setTitle("Alle eigenen Seiten");
+        try {
+            tableViewController = TableViewController.createWithNameAndTable("eigeneSeite", table);
+            tableViewController.setTitle("Eigene Seiten");
+        } catch (IOException e) {
+            tableViewController = null;
+        }
+        treeItem = new TreeItem<>(tableViewController);
+        treeItem.setExpanded(true);
+        treeItems.add(treeItem);
+
+        //SeitenPublic (Subtree von EigeneSeiten)
         table = new SeitenPublic();
         table.setTitle("Alle öffentliche Seiten");
         try {
@@ -98,16 +113,27 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         } catch (IOException e) {
             tableViewController = null;
         }
-        treeItem = new TreeItem<>(tableViewController);
-        treeItem.setExpanded(true);
-        treeItems.add(treeItem);
+        subTreeItem = new TreeItem<>(tableViewController);
+        treeItem.getChildren().add(subTreeItem);
 
-        //Seiten gekauft
+        //Seiten gekauft (Subtree von EigeneSeiten)
         table = new SeitenGekauft();
         table.setTitle("Alle gekauften Seiten");
         try {
             tableViewController = TableViewController.createWithNameAndTable("seitenGekauft", table);
             tableViewController.setTitle("Gekaufte Seiten");
+        } catch (IOException e) {
+            tableViewController = null;
+        }
+        subTreeItem = new TreeItem<>(tableViewController);
+        treeItem.getChildren().add(subTreeItem);
+
+        //EigeneEinträge
+        table = new EigeneEinträge();
+        table.setTitle("Alle eigenen Einträge");
+        try {
+            tableViewController = TableViewController.createWithNameAndTable("eigeneEinträge", table);
+            tableViewController.setTitle("Eigene Einträge");
         } catch (IOException e) {
             tableViewController = null;
         }

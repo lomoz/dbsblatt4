@@ -12,7 +12,6 @@ public class SeitenGekauft extends Table {
     public String getSelectQueryForTableWithFilter(String s) throws SQLException {
         //throw new SQLException(getClass().getName() + ".getSelectQueryForTableWithFilter(Data) nicht implementiert.");
 
-        //Nur Seiten anzeigen die den Seitentyp 'privat' haben oder alle?
         //Reicht es die Seiten anzuzeigen oder müssen auch alle Einträge angezeigt werden?
 
         String selectQuery = "SELECT Seite.* FROM Seite INNER JOIN Transaktion ON Seite.AutorBenutzerE_Mail_Adresse = Transaktion.AutorBenutzerE_Mail_Adresse WHERE Transaktion.BenutzerE_Mail_Adresse = '" + Application.getInstance().getData().get("loginEmail") + "'";
