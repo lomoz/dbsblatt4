@@ -3,14 +3,13 @@ package de.hhu.cs.dbs.internship.project.gui;
 import com.alexanderthelen.applicationkit.database.Table;
 import com.alexanderthelen.applicationkit.gui.TableViewController;
 import com.alexanderthelen.applicationkit.gui.ViewController;
-import de.hhu.cs.dbs.internship.project.table.SeitenGekauft.SeitenGekauft;
+import de.hhu.cs.dbs.internship.project.table.seitenGekauft.SeitenGekauft;
 import de.hhu.cs.dbs.internship.project.table.account.Account;
 import de.hhu.cs.dbs.internship.project.table.autor.Autor;
-import de.hhu.cs.dbs.internship.project.table.benutzer.Benutzer;
 import de.hhu.cs.dbs.internship.project.table.bewertung.Bewertung;
 import de.hhu.cs.dbs.internship.project.table.bilderTags.BilderTags;
 import de.hhu.cs.dbs.internship.project.table.gesamtverdienst.Gesamtverdienst;
-import de.hhu.cs.dbs.internship.project.table.seite.Seite;
+import de.hhu.cs.dbs.internship.project.table.seitenPublic.SeitenPublic;
 import de.hhu.cs.dbs.internship.project.table.tag_zu_bild.TagZuBild;
 import de.hhu.cs.dbs.internship.project.table.tags.Tags;
 import de.hhu.cs.dbs.internship.project.table.transaktion.Transaktion;
@@ -90,12 +89,12 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         treeItem.setExpanded(true);
         treeItems.add(treeItem);
 
-        //Seite öffentlich
-        table = new Seite();
+        //SeitenPublic
+        table = new SeitenPublic();
         table.setTitle("Alle öffentliche Seiten");
         try {
-            tableViewController = TableViewController.createWithNameAndTable("seite", table);
-            tableViewController.setTitle("Öffentliche Seite");
+            tableViewController = TableViewController.createWithNameAndTable("seitenPublic", table);
+            tableViewController.setTitle("Öffentliche Seiten");
         } catch (IOException e) {
             tableViewController = null;
         }

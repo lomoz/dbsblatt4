@@ -1,11 +1,11 @@
-package de.hhu.cs.dbs.internship.project.table.seite;
+package de.hhu.cs.dbs.internship.project.table.seitenPublic;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
 import java.sql.SQLException;
 
-public class Seite extends Table {
+public class SeitenPublic extends Table {
 
     @Override
     public String getSelectQueryForTableWithFilter(String s) throws SQLException {
