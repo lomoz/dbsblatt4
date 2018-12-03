@@ -3,10 +3,12 @@ package de.hhu.cs.dbs.internship.project.gui;
 import com.alexanderthelen.applicationkit.database.Table;
 import com.alexanderthelen.applicationkit.gui.TableViewController;
 import com.alexanderthelen.applicationkit.gui.ViewController;
+import de.hhu.cs.dbs.internship.project.table.SeitenGekauft.SeitenGekauft;
 import de.hhu.cs.dbs.internship.project.table.account.Account;
 import de.hhu.cs.dbs.internship.project.table.autor.Autor;
 import de.hhu.cs.dbs.internship.project.table.benutzer.Benutzer;
 import de.hhu.cs.dbs.internship.project.table.bewertung.Bewertung;
+import de.hhu.cs.dbs.internship.project.table.bilderTags.BilderTags;
 import de.hhu.cs.dbs.internship.project.table.gesamtverdienst.Gesamtverdienst;
 import de.hhu.cs.dbs.internship.project.table.seite.Seite;
 import de.hhu.cs.dbs.internship.project.table.tag_zu_bild.TagZuBild;
@@ -88,12 +90,25 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         treeItem.setExpanded(true);
         treeItems.add(treeItem);
 
-        //Seite
+        //Seite öffentlich
         table = new Seite();
-        table.setTitle("Seite");
+        table.setTitle("Alle öffentliche Seiten");
         try {
             tableViewController = TableViewController.createWithNameAndTable("seite", table);
-            tableViewController.setTitle("Seite");
+            tableViewController.setTitle("Öffentliche Seite");
+        } catch (IOException e) {
+            tableViewController = null;
+        }
+        treeItem = new TreeItem<>(tableViewController);
+        treeItem.setExpanded(true);
+        treeItems.add(treeItem);
+
+        //Seiten gekauft
+        table = new SeitenGekauft();
+        table.setTitle("Alle gekauften Seiten");
+        try {
+            tableViewController = TableViewController.createWithNameAndTable("seitenGekauft", table);
+            tableViewController.setTitle("Gekaufte Seiten");
         } catch (IOException e) {
             tableViewController = null;
         }
@@ -119,7 +134,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         table.setTitle("Tag gehört zu Bild");
         try {
             tableViewController = TableViewController.createWithNameAndTable("tag_zu_bild", table);
-            tableViewController.setTitle("Tag Zu Bild");
+            tableViewController.setTitle("Tags zuordnen");
         } catch (IOException e) {
             tableViewController = null;
         }
@@ -132,6 +147,19 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         try {
             tableViewController = TableViewController.createWithNameAndTable("bewertung", table);
             tableViewController.setTitle("Bewertung");
+        } catch (IOException e) {
+            tableViewController = null;
+        }
+        treeItem = new TreeItem<>(tableViewController);
+        treeItem.setExpanded(true);
+        treeItems.add(treeItem);
+
+        //Bild mit Tags
+        table = new BilderTags();
+        table.setTitle("Bilder mit Tags suchen");
+        try {
+            tableViewController = TableViewController.createWithNameAndTable("bilderTags", table);
+            tableViewController.setTitle("Bilder mit Tags");
         } catch (IOException e) {
             tableViewController = null;
         }

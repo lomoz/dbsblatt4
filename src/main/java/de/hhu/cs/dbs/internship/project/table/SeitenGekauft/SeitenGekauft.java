@@ -1,17 +1,18 @@
-package de.hhu.cs.dbs.internship.project.table.seite;
+package de.hhu.cs.dbs.internship.project.table.SeitenGekauft;
 
+import com.alexanderthelen.applicationkit.Application;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
 import java.sql.SQLException;
 
-public class Seite extends Table {
+public class SeitenGekauft extends Table {
 
     @Override
     public String getSelectQueryForTableWithFilter(String s) throws SQLException {
         //throw new SQLException(getClass().getName() + ".getSelectQueryForTableWithFilter(Data) nicht implementiert.");
 
-        String selectQuery = "SELECT * FROM Seite WHERE Seitentyp = 'oeffentlich'";
+        String selectQuery = "SELECT Seite.* FROM Seite INNER JOIN Transaktion ON Seite.AutorBenutzerE_Mail_Adresse = Transaktion.AutorBenutzerE_Mail_Adresse WHERE Transaktion.BenutzerE_Mail_Adresse = '" + Application.getInstance().getData().get("loginEmail") + "'";
         return selectQuery;
     }
 
