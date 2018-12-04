@@ -30,7 +30,7 @@ public class EigeneEinträge extends Table {
     public void insertRowWithData(Data data) throws SQLException {
         //throw new SQLException(getClass().getName() + ".insertRowWithData(Data) nicht implementiert.");
 
-        //Wie prüfen, dass die angegebene SeitenID auch zu einer Seite gehört, die vom eingeloggten Autor angelegt wurde?
+        //Per Select prüfen, ob die eingegebene SeitenID vom eingeloggten Benutzer ist.
 
         if ((Integer) Project.getInstance().getData().get("permission") == 1) {
             throw  new SQLException("Nicht die notwendigen Rechte!");
@@ -49,7 +49,17 @@ public class EigeneEinträge extends Table {
 
     @Override
     public void updateRowWithData(Data data, Data data1) throws SQLException {
-        throw new SQLException(getClass().getName() + ".updateRowWithData(Data, Data) nicht implementiert.");
+        //throw new SQLException(getClass().getName() + ".updateRowWithData(Data, Data) nicht implementiert.");
+
+        String statement = "UPDATE Eintrag SET Eintragstitel = ?, Eintragstext = ?, Eintragsuhrzeit = ? WHERE Eintragstitel = ? AND Eintragstext = ? AND Eintragsuhrzeit = ?";
+        PreparedStatement preparedStatement = Project.getInstance().getConnection().prepareStatement(statement);
+        preparedStatement.setObject(1, data1.get("Eintrag.Eintragstitel"));
+        preparedStatement.setObject(2, data1.get("Eintrag.Eintragstext"));
+        preparedStatement.setObject(3, data1.get("Eintrag.Eintragsuhrzeit"));
+        preparedStatement.setObject(4, data.get("Eintrag.Eintragstitel"));
+        preparedStatement.setObject(5, data.get("Eintrag.Eintragstext"));
+        preparedStatement.setObject(6, data.get("Eintrag.Eintragsuhrzeit"));
+        preparedStatement.executeUpdate();
     }
 
     @Override
