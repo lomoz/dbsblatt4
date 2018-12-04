@@ -66,8 +66,5 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
         preparedStatement.setObject(3, data.get("firstName"));
         preparedStatement.setObject(4, data.get("password1"));
         preparedStatement.executeUpdate();
-
-        // Wie kann man sich als Autor registrieren?
-
     }
 }
