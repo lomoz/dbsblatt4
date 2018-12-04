@@ -54,13 +54,6 @@ public class EigeneSeiten extends Table {
 
     @Override
     public void deleteRowWithData(Data data) throws SQLException {
-        //throw new SQLException(getClass().getName() + ".deleteRowWithData(Data) nicht implementiert.");
-
-        //Bisher können nur öffentliche Seiten gelöscht werden.
-
-        String statement = "DELETE FROM Seite WHERE SeitenID = ? AND Seitentyp = 'oeffentlich'";
-        PreparedStatement preparedStatement = Project.getInstance().getConnection().prepareStatement(statement);
-        preparedStatement.setObject(1, data.get("Seite.SeitenID"));
-        preparedStatement.executeUpdate();
+        throw new SQLException(getClass().getName() + ".deleteRowWithData(Data) nicht implementiert.");
     }
 }
