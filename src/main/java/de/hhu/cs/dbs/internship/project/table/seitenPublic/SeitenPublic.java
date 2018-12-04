@@ -11,7 +11,7 @@ public class SeitenPublic extends Table {
     public String getSelectQueryForTableWithFilter(String s) throws SQLException {
         //throw new SQLException(getClass().getName() + ".getSelectQueryForTableWithFilter(Data) nicht implementiert.");
 
-        String selectQuery = "SELECT * FROM Seite WHERE Seitentyp = 'oeffentlich'";
+        String selectQuery = "SELECT Seite.*, Eintrag.EintragsID, Eintrag.Eintragstitel, Eintrag.Eintragstext, Eintrag.Eintragsuhrzeit FROM Seite INNER JOIN Eintrag ON Seite.SeitenID = Eintrag.SeiteSeitenID WHERE Seitentyp = 'oeffentlich'";
         return selectQuery;
     }
 
@@ -19,7 +19,7 @@ public class SeitenPublic extends Table {
     public String getSelectQueryForRowWithData(Data data) throws SQLException {
         //throw new SQLException(getClass().getName() + ".getSelectQueryForRowWithData(Data) nicht implementiert.");
 
-        String selectQuery = "SELECT * FROM Seite WHERE Seite.SeitenID = '" + data.get("Seite.SeitenID") + "'";
+        String selectQuery = "SELECT Seite.*, Eintrag.EintragsID, Eintrag.Eintragstitel, Eintrag.Eintragstext, Eintrag.Eintragsuhrzeit FROM Seite INNER JOIN Eintrag ON Seite.SeitenID = Eintrag.SeiteSeitenID WHERE Seite.SeitenID = '" + data.get("Seite.SeitenID") + "'";
         return selectQuery;
     }
 

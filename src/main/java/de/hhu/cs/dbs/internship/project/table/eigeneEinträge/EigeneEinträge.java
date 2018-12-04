@@ -6,7 +6,9 @@ import com.alexanderthelen.applicationkit.database.Table;
 import de.hhu.cs.dbs.internship.project.Project;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class EigeneEinträge extends Table {
 
@@ -30,8 +32,6 @@ public class EigeneEinträge extends Table {
     public void insertRowWithData(Data data) throws SQLException {
         //throw new SQLException(getClass().getName() + ".insertRowWithData(Data) nicht implementiert.");
 
-        //Per Select prüfen, ob die eingegebene SeitenID vom eingeloggten Benutzer ist.
-
         if ((Integer) Project.getInstance().getData().get("permission") == 1) {
             throw  new SQLException("Nicht die notwendigen Rechte!");
         }
@@ -43,7 +43,19 @@ public class EigeneEinträge extends Table {
             preparedStatement.setObject(3, data.get("Eintrag.Eintragstext"));
             preparedStatement.setObject(4, data.get("Eintrag.Eintragsuhrzeit"));
             preparedStatement.setObject(5, data.get("Eintrag.SeiteSeitenID"));
-            preparedStatement.executeUpdate();
+
+            //Per Select prüfen, ob die eingegebene SeitenID vom eingeloggten Benutzer ist.
+            String selectQuerySeitenID = "SELECT * FROM Seite INNER JOIN Eintrag ON Seite.SeitenID = Eintrag.SeiteSeitenID WHERE AutorBenutzerE_Mail_Adresse = '" + Application.getInstance().getData().get("loginEmail") + "' AND Seite.SeitenID = '" + data.get("Eintrag.SeiteSeitenID") + "'";
+
+            Statement statementSeitenID = Project.getInstance().getConnection().createStatement();
+            ResultSet resultSetSeitenID = statementSeitenID.executeQuery(selectQuerySeitenID);
+
+            if (!resultSetSeitenID.next()) {
+                throw new SQLException("Ausgewählte Seite nicht von Ihnen erstellt!");
+            }
+            else {
+                preparedStatement.executeUpdate();
+            }
         }
     }
 
