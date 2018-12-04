@@ -118,7 +118,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 
         //Seiten gekauft (Subtree von EigeneSeiten)
         table = new SeitenGekauft();
-        table.setTitle("Alle gekauften Seiten");
+        table.setTitle("Alle gekauften Seiten und Einträge");
         try {
             tableViewController = TableViewController.createWithNameAndTable("seitenGekauft", table);
             tableViewController.setTitle("Gekaufte Seiten");

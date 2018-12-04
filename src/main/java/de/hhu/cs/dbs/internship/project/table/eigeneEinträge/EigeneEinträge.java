@@ -45,7 +45,6 @@ public class EigeneEinträge extends Table {
             preparedStatement.setObject(5, data.get("Eintrag.SeiteSeitenID"));
             preparedStatement.executeUpdate();
         }
-
     }
 
     @Override

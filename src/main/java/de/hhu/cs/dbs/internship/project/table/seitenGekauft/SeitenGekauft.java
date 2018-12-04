@@ -14,7 +14,7 @@ public class SeitenGekauft extends Table {
 
         //Reicht es die Seiten anzuzeigen oder müssen auch alle Einträge angezeigt werden?
 
-        String selectQuery = "SELECT Seite.* FROM Seite INNER JOIN Transaktion ON Seite.AutorBenutzerE_Mail_Adresse = Transaktion.AutorBenutzerE_Mail_Adresse WHERE Transaktion.BenutzerE_Mail_Adresse = '" + Application.getInstance().getData().get("loginEmail") + "'";
+        String selectQuery = "SELECT Seite.*, Eintrag.EintragsID, Eintrag.Eintragstitel, Eintrag.Eintragstext, Eintrag.Eintragsuhrzeit FROM Seite INNER JOIN Eintrag ON Seite.SeitenID = Eintrag.SeiteSeitenID INNER JOIN Transaktion ON Seite.AutorBenutzerE_Mail_Adresse = Transaktion.AutorBenutzerE_Mail_Adresse WHERE Transaktion.BenutzerE_Mail_Adresse = '" + Application.getInstance().getData().get("loginEmail") + "'";
         return selectQuery;
     }
 
@@ -22,7 +22,7 @@ public class SeitenGekauft extends Table {
     public String getSelectQueryForRowWithData(Data data) throws SQLException {
         //throw new SQLException(getClass().getName() + ".getSelectQueryForRowWithData(Data) nicht implementiert.");
 
-        String selectQuery = "SELECT * FROM Seite WHERE Seite.SeitenID = '" + data.get("Seite.SeitenID") + "'";
+        String selectQuery = "SELECT Seite.*, Eintrag.EintragsID, Eintrag.Eintragstitel, Eintrag.Eintragstext, Eintrag.Eintragsuhrzeit FROM Seite INNER JOIN Eintrag ON Seite.SeitenID = Eintrag.SeiteSeitenID WHERE Seite.SeitenID = '" + data.get("Seite.SeitenID") + "' AND Eintrag.EintragsID = '" + data.get("Eintrag.EintragsID") + "'";
         return selectQuery;
     }
 
