@@ -11,19 +11,20 @@ public class BilderTags extends Table {
     public String getSelectQueryForTableWithFilter(String s) throws SQLException {
         //throw new SQLException(getClass().getName() + ".getSelectQueryForTableWithFilter(Data) nicht implementiert.");
 
+        String selectQuery = "";
 
-        String selectQuery = "SELECT Seite.SeitenID, Seite.Seitentyp, Eintrag.EintragsID, Bild.BildID FROM Bild INNER JOIN Eintrag ON Bild.EintragEintragsID = Eintrag.EintragsID INNER JOIN Seite ON Eintrag.SeiteSeitenID = Seite.SeitenID INNER JOIN TagGehoertZuBild ON Bild.BildID = TagGehoertZuBild.BildBildID";
-
-        /*
         if (s != null && !s.isEmpty()) {
             String[] tags = s.split("\\s+");
-            for (int i = 0; i < tags.length; i++) {
+            for (int i = 0; i < tags.length-1; i++) {
                 System.out.println(tags[i]);
-                selectQuery += " AND TagGehoertZuBild.TagTagtext LIKE '%" + tags[i] + "%'";
+                selectQuery += "SELECT Seite.SeitenID, Seite.Seitentyp, Eintrag.EintragsID, Bild.BildID FROM Bild INNER JOIN Eintrag ON Bild.EintragEintragsID = Eintrag.EintragsID INNER JOIN Seite ON Eintrag.SeiteSeitenID = Seite.SeitenID INNER JOIN TagGehoertZuBild ON Bild.BildID = TagGehoertZuBild.BildBildID WHERE TagGehoertZuBild.TagTagtext LIKE '%" + tags[i] + "%' INTERSECT ";
             }
+            selectQuery += "SELECT Seite.SeitenID, Seite.Seitentyp, Eintrag.EintragsID, Bild.BildID FROM Bild INNER JOIN Eintrag ON Bild.EintragEintragsID = Eintrag.EintragsID INNER JOIN Seite ON Eintrag.SeiteSeitenID = Seite.SeitenID INNER JOIN TagGehoertZuBild ON Bild.BildID = TagGehoertZuBild.BildBildID WHERE TagGehoertZuBild.TagTagtext LIKE '%" + tags[tags.length-1] + "%'";
 
         }
-        */
+        else {
+            selectQuery = "SELECT Seite.SeitenID, Seite.Seitentyp, Eintrag.EintragsID, Bild.BildID FROM Bild INNER JOIN Eintrag ON Bild.EintragEintragsID = Eintrag.EintragsID INNER JOIN Seite ON Eintrag.SeiteSeitenID = Seite.SeitenID INNER JOIN TagGehoertZuBild ON Bild.BildID = TagGehoertZuBild.BildBildID";
+        }
 
         return selectQuery;
     }

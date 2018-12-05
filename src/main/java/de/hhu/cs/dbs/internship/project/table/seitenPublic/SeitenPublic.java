@@ -11,7 +11,16 @@ public class SeitenPublic extends Table {
     public String getSelectQueryForTableWithFilter(String s) throws SQLException {
         //throw new SQLException(getClass().getName() + ".getSelectQueryForTableWithFilter(Data) nicht implementiert.");
 
-        String selectQuery = "SELECT Seite.*, Eintrag.EintragsID, Eintrag.Eintragstitel, Eintrag.Eintragstext, Eintrag.Eintragsuhrzeit FROM Seite INNER JOIN Eintrag ON Seite.SeitenID = Eintrag.SeiteSeitenID WHERE Seitentyp = 'oeffentlich'";
+        String selectQuery = "SELECT Seite.*, Eintrag.EintragsID, Eintrag.Eintragstitel, Eintrag.Eintragstext, Eintrag.Eintragsuhrzeit FROM Seite INNER JOIN Eintrag ON Seite.SeitenID = Eintrag.SeiteSeitenID WHERE Seite.Seitentyp = 'oeffentlich'";
+
+        //String am ersten Leerzeichen trennen
+        String[] dateAndTitlte = s.split("\\s+");
+
+        if (s != null && !s.isEmpty()) {
+            selectQuery += " AND Seite.Seitendatum LIKE '%" + s + "%'";
+            selectQuery += " AND Eintrag.Eintragstitel LIKE '%" + s + "%'";
+        }
+
         return selectQuery;
     }
 
