@@ -13,12 +13,11 @@ public class SeitenPublic extends Table {
 
         String selectQuery = "SELECT Seite.*, Eintrag.EintragsID, Eintrag.Eintragstitel, Eintrag.Eintragstext, Eintrag.Eintragsuhrzeit FROM Seite INNER JOIN Eintrag ON Seite.SeitenID = Eintrag.SeiteSeitenID WHERE Seite.Seitentyp = 'oeffentlich'";
 
-        //String am ersten Leerzeichen trennen
-        String[] dateAndTitlte = s.split("\\s+");
-
         if (s != null && !s.isEmpty()) {
-            selectQuery += " AND Seite.Seitendatum LIKE '%" + s + "%'";
-            selectQuery += " AND Eintrag.Eintragstitel LIKE '%" + s + "%'";
+            //String am ersten Leerzeichen trennen
+            String[] dateAndTitle = s.split("\\s+");
+            selectQuery += " AND Seite.Seitendatum LIKE '%" + dateAndTitle[0] + "%'";
+            selectQuery += " AND Eintrag.Eintragstitel LIKE '%" + dateAndTitle[1] + "%'";
         }
 
         return selectQuery;

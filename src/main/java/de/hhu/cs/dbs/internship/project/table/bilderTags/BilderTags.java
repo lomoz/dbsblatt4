@@ -20,7 +20,6 @@ public class BilderTags extends Table {
                 selectQuery += "SELECT Seite.SeitenID, Seite.Seitentyp, Eintrag.EintragsID, Bild.BildID FROM Bild INNER JOIN Eintrag ON Bild.EintragEintragsID = Eintrag.EintragsID INNER JOIN Seite ON Eintrag.SeiteSeitenID = Seite.SeitenID INNER JOIN TagGehoertZuBild ON Bild.BildID = TagGehoertZuBild.BildBildID WHERE TagGehoertZuBild.TagTagtext LIKE '%" + tags[i] + "%' INTERSECT ";
             }
             selectQuery += "SELECT Seite.SeitenID, Seite.Seitentyp, Eintrag.EintragsID, Bild.BildID FROM Bild INNER JOIN Eintrag ON Bild.EintragEintragsID = Eintrag.EintragsID INNER JOIN Seite ON Eintrag.SeiteSeitenID = Seite.SeitenID INNER JOIN TagGehoertZuBild ON Bild.BildID = TagGehoertZuBild.BildBildID WHERE TagGehoertZuBild.TagTagtext LIKE '%" + tags[tags.length-1] + "%'";
-
         }
         else {
             selectQuery = "SELECT Seite.SeitenID, Seite.Seitentyp, Eintrag.EintragsID, Bild.BildID FROM Bild INNER JOIN Eintrag ON Bild.EintragEintragsID = Eintrag.EintragsID INNER JOIN Seite ON Eintrag.SeiteSeitenID = Seite.SeitenID INNER JOIN TagGehoertZuBild ON Bild.BildID = TagGehoertZuBild.BildBildID";
@@ -40,7 +39,6 @@ public class BilderTags extends Table {
         }
         else {
             selectQuery = "SELECT Eintrag.*, Bild.Bilddatei FROM Seite INNER JOIN Eintrag ON Seite.SeitenID = Eintrag.SeiteSeitenID INNER JOIN Bild ON Eintrag.EintragsID = Bild.EintragEintragsID WHERE Bild.BildID = '" + data.get("Bild.BildID") + "'";
-
         }
 
         return selectQuery;
