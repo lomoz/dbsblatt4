@@ -3,15 +3,15 @@ package de.hhu.cs.dbs.internship.project.gui;
 import com.alexanderthelen.applicationkit.database.Table;
 import com.alexanderthelen.applicationkit.gui.TableViewController;
 import com.alexanderthelen.applicationkit.gui.ViewController;
-import de.hhu.cs.dbs.internship.project.table.bilderGPS.BilderGPS;
-import de.hhu.cs.dbs.internship.project.table.eigeneEinträge.EigeneEinträge;
-import de.hhu.cs.dbs.internship.project.table.eigeneSeiten.EigeneSeiten;
-import de.hhu.cs.dbs.internship.project.table.seitenGekauft.SeitenGekauft;
 import de.hhu.cs.dbs.internship.project.table.account.Account;
 import de.hhu.cs.dbs.internship.project.table.autor.Autor;
 import de.hhu.cs.dbs.internship.project.table.bewertung.Bewertung;
+import de.hhu.cs.dbs.internship.project.table.bilderGPS.BilderGPS;
 import de.hhu.cs.dbs.internship.project.table.bilderTags.BilderTags;
+import de.hhu.cs.dbs.internship.project.table.eigeneEintraege.EigeneEintraege;
+import de.hhu.cs.dbs.internship.project.table.eigeneSeiten.EigeneSeiten;
 import de.hhu.cs.dbs.internship.project.table.gesamtverdienst.Gesamtverdienst;
+import de.hhu.cs.dbs.internship.project.table.seitenGekauft.SeitenGekauft;
 import de.hhu.cs.dbs.internship.project.table.seitenPublic.SeitenPublic;
 import de.hhu.cs.dbs.internship.project.table.tag_zu_bild.TagZuBild;
 import de.hhu.cs.dbs.internship.project.table.tags.Tags;
@@ -129,11 +129,11 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         subTreeItem = new TreeItem<>(tableViewController);
         treeItem.getChildren().add(subTreeItem);
 
-        //EigeneEinträge
-        table = new EigeneEinträge();
+        //Eigene Eintraege
+        table = new EigeneEintraege();
         table.setTitle("Alle eigenen Einträge");
         try {
-            tableViewController = TableViewController.createWithNameAndTable("eigeneEinträge", table);
+            tableViewController = TableViewController.createWithNameAndTable("eigeneEintraege", table);
             tableViewController.setTitle("Eigene Einträge");
         } catch (IOException e) {
             tableViewController = null;

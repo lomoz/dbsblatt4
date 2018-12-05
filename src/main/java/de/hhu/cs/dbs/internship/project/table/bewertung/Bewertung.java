@@ -1,6 +1,5 @@
 package de.hhu.cs.dbs.internship.project.table.bewertung;
 
-import com.alexanderthelen.applicationkit.Application;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 import de.hhu.cs.dbs.internship.project.Project;

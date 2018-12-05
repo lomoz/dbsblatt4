@@ -32,18 +32,7 @@ public class BilderGPS extends Table {
 
     @Override
     public String getSelectQueryForRowWithData(Data data) throws SQLException {
-        //throw new SQLException(getClass().getName() + ".getSelectQueryForRowWithData(Data) nicht implementiert.");
-
-        //Prüfen, ob die angeklickte Zeile zu einer öffentlichen oder privaten Seite gehört und entsprechende Daten ausgeben.
-        String selectQuery;
-        if (data.get("Seite.Seitentyp").equals("privat")) {
-            selectQuery = "SELECT Seite.AutorBenutzerE_Mail_Adresse FROM Seite INNER JOIN Eintrag ON Seite.SeitenID = Eintrag.SeiteSeitenID INNER JOIN Bild ON Eintrag.EintragsID = Bild.EintragEintragsID WHERE Bild.BildID = '" + data.get("Bild.BildID") + "'";
-        }
-        else {
-            selectQuery = "SELECT Eintrag.*, Bild.Bilddatei FROM Seite INNER JOIN Eintrag ON Seite.SeitenID = Eintrag.SeiteSeitenID INNER JOIN Bild ON Eintrag.EintragsID = Bild.EintragEintragsID WHERE Bild.BildID = '" + data.get("Bild.BildID") + "'";
-        }
-
-        return selectQuery;
+        throw new SQLException(getClass().getName() + ".getSelectQueryForRowWithData(Data) nicht implementiert.");
     }
 
     @Override

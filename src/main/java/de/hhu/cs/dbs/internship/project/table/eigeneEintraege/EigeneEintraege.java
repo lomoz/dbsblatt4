@@ -1,4 +1,4 @@
-package de.hhu.cs.dbs.internship.project.table.eigeneEinträge;
+package de.hhu.cs.dbs.internship.project.table.eigeneEintraege;
 
 import com.alexanderthelen.applicationkit.Application;
 import com.alexanderthelen.applicationkit.database.Data;
@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class EigeneEinträge extends Table {
+public class EigeneEintraege extends Table {
 
     @Override
     public String getSelectQueryForTableWithFilter(String s) throws SQLException {
