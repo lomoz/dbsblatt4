@@ -1,4 +1,4 @@
-package de.hhu.cs.dbs.internship.project.table.tag_zu_bild;
+package de.hhu.cs.dbs.internship.project.table.tagZuBild;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;

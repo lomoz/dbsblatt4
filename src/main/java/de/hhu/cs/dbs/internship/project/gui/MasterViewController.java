@@ -13,7 +13,7 @@ import de.hhu.cs.dbs.internship.project.table.eigeneSeiten.EigeneSeiten;
 import de.hhu.cs.dbs.internship.project.table.gesamtverdienst.Gesamtverdienst;
 import de.hhu.cs.dbs.internship.project.table.seitenGekauft.SeitenGekauft;
 import de.hhu.cs.dbs.internship.project.table.seitenPublic.SeitenPublic;
-import de.hhu.cs.dbs.internship.project.table.tag_zu_bild.TagZuBild;
+import de.hhu.cs.dbs.internship.project.table.tagZuBild.TagZuBild;
 import de.hhu.cs.dbs.internship.project.table.tags.Tags;
 import de.hhu.cs.dbs.internship.project.table.transaktion.Transaktion;
 import javafx.scene.control.TreeItem;
@@ -159,7 +159,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         table = new TagZuBild();
         table.setTitle("Tag gehört zu Bild");
         try {
-            tableViewController = TableViewController.createWithNameAndTable("tag_zu_bild", table);
+            tableViewController = TableViewController.createWithNameAndTable("tagZuBild", table);
             tableViewController.setTitle("Tags zuordnen");
         } catch (IOException e) {
             tableViewController = null;
