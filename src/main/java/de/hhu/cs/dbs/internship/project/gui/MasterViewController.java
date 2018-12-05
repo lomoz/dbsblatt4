@@ -3,6 +3,7 @@ package de.hhu.cs.dbs.internship.project.gui;
 import com.alexanderthelen.applicationkit.database.Table;
 import com.alexanderthelen.applicationkit.gui.TableViewController;
 import com.alexanderthelen.applicationkit.gui.ViewController;
+import de.hhu.cs.dbs.internship.project.table.bilderGPS.BilderGPS;
 import de.hhu.cs.dbs.internship.project.table.eigeneEinträge.EigeneEinträge;
 import de.hhu.cs.dbs.internship.project.table.eigeneSeiten.EigeneSeiten;
 import de.hhu.cs.dbs.internship.project.table.seitenGekauft.SeitenGekauft;
@@ -185,6 +186,19 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         try {
             tableViewController = TableViewController.createWithNameAndTable("bilderTags", table);
             tableViewController.setTitle("Bilder mit Tags");
+        } catch (IOException e) {
+            tableViewController = null;
+        }
+        treeItem = new TreeItem<>(tableViewController);
+        treeItem.setExpanded(true);
+        treeItems.add(treeItem);
+
+        //Bilder mit GPS
+        table = new BilderGPS();
+        table.setTitle("Bilder mit GPS Koordinaten suchen");
+        try {
+            tableViewController = TableViewController.createWithNameAndTable("bilderGPS", table);
+            tableViewController.setTitle("Bilder mit GPS");
         } catch (IOException e) {
             tableViewController = null;
         }

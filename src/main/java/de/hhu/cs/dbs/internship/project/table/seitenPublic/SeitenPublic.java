@@ -16,8 +16,13 @@ public class SeitenPublic extends Table {
         if (s != null && !s.isEmpty()) {
             //String am ersten Leerzeichen trennen
             String[] dateAndTitle = s.split("\\s+");
-            selectQuery += " AND Seite.Seitendatum LIKE '%" + dateAndTitle[0] + "%'";
-            selectQuery += " AND Eintrag.Eintragstitel LIKE '%" + dateAndTitle[1] + "%'";
+            if (dateAndTitle.length != 2) {
+                throw new SQLException("Suchformat nicht eingehalten!");
+            }
+            else {
+                selectQuery += " AND Seite.Seitendatum LIKE '%" + dateAndTitle[0] + "%'";
+                selectQuery += " AND Eintrag.Eintragstitel LIKE '%" + dateAndTitle[1] + "%'";
+            }
         }
 
         return selectQuery;
