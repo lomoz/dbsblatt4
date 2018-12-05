@@ -4,17 +4,11 @@ import com.alexanderthelen.applicationkit.Application;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 import de.hhu.cs.dbs.internship.project.Project;
-import javafx.fxml.FXML;
-import javafx.scene.control.PasswordField;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Autor extends Table {
-
-    @FXML
-    protected PasswordField passwordPasswordField;
-
 
     @Override
     public String getSelectQueryForTableWithFilter(String s) throws SQLException {
@@ -49,11 +43,18 @@ public class Autor extends Table {
 
             String statement = "INSERT INTO Autor VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = Project.getInstance().getConnection().prepareStatement(statement);
-            preparedStatement.setObject(1, Application.getInstance().getData().get("loginEmail"));
+            preparedStatement.setObject(1, data.get("Autor.BenutzerE_Mail_Adresse"));
             preparedStatement.setObject(2, data.get("Autor.Pseudonym"));
             preparedStatement.setObject(3, data.get("Autor.Preis"));
             preparedStatement.setObject(4, data.get("Autor.Avatar"));
-            preparedStatement.executeUpdate();
+
+            //Per Select prüfen, ob die eingegebene E-Mail die vom eingeloggten Benutzer ist.
+            if (!data.get("Autor.BenutzerE_Mail_Adresse").equals(Application.getInstance().getData().get("loginEmail").toString())) {
+                throw new SQLException("Sie können sich nicht mit einer fremden E-Mail-Adresse als Autor registrieren!");
+            }
+            else {
+                preparedStatement.executeUpdate();
+            }
 
             Application.getInstance().getData().put("permission", 2);
         }
