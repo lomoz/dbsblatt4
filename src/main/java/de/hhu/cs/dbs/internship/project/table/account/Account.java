@@ -102,14 +102,11 @@ public class Account extends Table {
             Application.getInstance().getData().put("loginEmail", data1.get("Benutzer.E_Mail_Adresse"));
 
             //UPDATE Attribute Autor
-            String statementAutor = "UPDATE Autor SET Pseudonym = ?, Preis = ?, Avatar = ? WHERE Pseudonym = ? AND Preis = ? AND Avatar = ?";
+            String statementAutor = "UPDATE Autor SET Pseudonym = ?, Preis = ?, Avatar = ? WHERE BenutzerE_Mail_Adresse = '" + Application.getInstance().getData().get("loginEmail") + "'";
             PreparedStatement preparedStatementAutor = Project.getInstance().getConnection().prepareStatement(statementAutor);
             preparedStatementAutor.setObject(1, data1.get("Autor.Pseudonym"));
             preparedStatementAutor.setObject(2, data1.get("Autor.Preis"));
             preparedStatementAutor.setObject(3, data1.get("Autor.Avatar"));
-            preparedStatementAutor.setObject(4, data.get("Autor.Pseudonym"));
-            preparedStatementAutor.setObject(5, data.get("Autor.Preis"));
-            preparedStatementAutor.setObject(6, data.get("Autor.Avatar"));
             preparedStatementAutor.executeUpdate();
         }
     }

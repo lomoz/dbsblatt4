@@ -92,7 +92,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         treeItem.setExpanded(true);
         treeItems.add(treeItem);
 
-        //EigeneSeite
+        //Eigene Seite
         table = new EigeneSeiten();
         table.setTitle("Alle eigenen Seiten");
         try {
@@ -105,7 +105,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         treeItem.setExpanded(true);
         treeItems.add(treeItem);
 
-        //SeitenPublic (Subtree von EigeneSeiten)
+        //Seiten Public (Subtree von EigeneSeiten)
         table = new SeitenPublic();
         table.setTitle("Alle öffentliche Seiten");
         try {

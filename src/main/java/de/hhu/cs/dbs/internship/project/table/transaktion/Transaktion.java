@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Transaktion extends Table {
 
@@ -41,13 +43,28 @@ public class Transaktion extends Table {
         ResultSet resultSetPreis = statementPreis.executeQuery(selectQueryPreis);
         resultSetPreis.next();
 
+        Double gutscheinWert;
+
+        if (Double.parseDouble(data.get("Transaktion.Gutschein").toString()) > resultSetPreis.getDouble(1)) {
+            gutscheinWert = resultSetPreis.getDouble(1);
+            System.out.println(gutscheinWert);
+        }
+        else {
+             gutscheinWert = Double.parseDouble(data.get("Transaktion.Gutschein").toString());
+            System.out.println(gutscheinWert);
+        }
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime localDateTime = LocalDateTime.now();
+        System.out.println(dateTimeFormatter.format(localDateTime));
+
         String statement = "INSERT INTO Transaktion VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = Project.getInstance().getConnection().prepareStatement(statement);
         preparedStatement.setObject(1, data.get("Transaktion.TransaktionsID"));
         preparedStatement.setObject(2, data.get("Transaktion.Transaktionsdatum"));
-        preparedStatement.setObject(3, resultSetPreis.getBigDecimal(1));
+        preparedStatement.setObject(3, resultSetPreis.getDouble(1));
         preparedStatement.setObject(4, data.get("Transaktion.Zahlungsmittel"));
-        preparedStatement.setObject(5, data.get("Transaktion.Gutschein"));
+        preparedStatement.setObject(5, gutscheinWert);
         preparedStatement.setObject(6, data.get("Transaktion.BenutzerE_Mail_Adresse"));
         preparedStatement.setObject(7, data.get("Transaktion.Transaktionszweck"));
         preparedStatement.setObject(8, data.get("Transaktion.AutorBenutzerE_Mail_Adresse"));
@@ -56,6 +73,7 @@ public class Transaktion extends Table {
         if (!data.get("Transaktion.BenutzerE_Mail_Adresse").equals(Application.getInstance().getData().get("loginEmail").toString())) {
             throw new SQLException("Sie können keine Transaktion für einen anderen Nutzer tätigen!");
         }
+
         else {
             preparedStatement.executeUpdate();
         }
