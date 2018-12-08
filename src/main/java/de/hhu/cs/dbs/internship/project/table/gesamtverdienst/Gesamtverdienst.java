@@ -16,7 +16,7 @@ public class Gesamtverdienst extends Table {
         String selectQuery;
 
         if ((Integer) Project.getInstance().getData().get("permission") == 1) {
-            throw  new SQLException("Nicht die notwendigen Rechte!");
+            throw  new SQLException("Nicht die notwendigen Rechte! Registrieren Sie sich als Autor um Zugriff zu erhalten!");
         }
         else {
             selectQuery = "SELECT Autor.BenutzerE_Mail_Adresse, round((sum(Autor.Preis) - sum(Transaktion.Gutschein)), 2) AS Gesamtverdienst FROM Autor INNER JOIN Transaktion ON Autor.BenutzerE_Mail_Adresse = Transaktion.AutorBenutzerE_Mail_Adresse WHERE Autor.BenutzerE_Mail_Adresse = '" + Application.getInstance().getData().get("loginEmail") + "' GROUP BY Autor.BenutzerE_Mail_Adresse";

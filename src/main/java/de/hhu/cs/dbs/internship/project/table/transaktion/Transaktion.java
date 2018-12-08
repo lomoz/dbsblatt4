@@ -5,10 +5,7 @@ import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 import de.hhu.cs.dbs.internship.project.Project;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -56,12 +53,14 @@ public class Transaktion extends Table {
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime localDateTime = LocalDateTime.now();
-        System.out.println(dateTimeFormatter.format(localDateTime));
+
+        String currentDateTime = dateTimeFormatter.format(localDateTime);
+        System.out.println(currentDateTime);
 
         String statement = "INSERT INTO Transaktion VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = Project.getInstance().getConnection().prepareStatement(statement);
         preparedStatement.setObject(1, data.get("Transaktion.TransaktionsID"));
-        preparedStatement.setObject(2, data.get("Transaktion.Transaktionsdatum"));
+        preparedStatement.setObject(2, currentDateTime);
         preparedStatement.setObject(3, resultSetPreis.getDouble(1));
         preparedStatement.setObject(4, data.get("Transaktion.Zahlungsmittel"));
         preparedStatement.setObject(5, gutscheinWert);
@@ -73,7 +72,6 @@ public class Transaktion extends Table {
         if (!data.get("Transaktion.BenutzerE_Mail_Adresse").equals(Application.getInstance().getData().get("loginEmail").toString())) {
             throw new SQLException("Sie können keine Transaktion für einen anderen Nutzer tätigen!");
         }
-
         else {
             preparedStatement.executeUpdate();
         }

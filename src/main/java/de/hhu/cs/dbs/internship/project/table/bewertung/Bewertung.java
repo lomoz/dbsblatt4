@@ -1,5 +1,6 @@
 package de.hhu.cs.dbs.internship.project.table.bewertung;
 
+import com.alexanderthelen.applicationkit.Application;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 import de.hhu.cs.dbs.internship.project.Project;
@@ -41,7 +42,14 @@ public class Bewertung extends Table {
         preparedStatement.setObject(2, data.get("BenutzerBewertetAutor.AutorBenutzerE_Mail_Adresse"));
         preparedStatement.setObject(3, data.get("BenutzerBewertetAutor.Bewertungstext"));
         preparedStatement.setObject(4, data.get("BenutzerBewertetAutor.Benotung"));
-        preparedStatement.executeUpdate();
+
+        //Per Select prüfen, ob die eingegebene E-Mail die vom eingeloggten Benutzer ist.
+        if (!data.get("BenutzerBewertetAutor.BenutzerE_Mail_Adresse").equals(Application.getInstance().getData().get("loginEmail").toString())) {
+            throw new SQLException("Sie können keine Bewertung für einen anderen Nutzer schreiben!");
+        }
+        else {
+            preparedStatement.executeUpdate();
+        }
     }
 
     @Override

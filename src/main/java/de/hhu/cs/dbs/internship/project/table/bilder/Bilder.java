@@ -1,13 +1,16 @@
-package de.hhu.cs.dbs.internship.project.table.tagZuBild;
+package de.hhu.cs.dbs.internship.project.table.bilder;
 
+import com.alexanderthelen.applicationkit.Application;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 import de.hhu.cs.dbs.internship.project.Project;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
-public class TagZuBild extends Table {
+public class Bilder extends Table {
 
     @Override
     public String getSelectQueryForTableWithFilter(String s) throws SQLException {
@@ -19,11 +22,8 @@ public class TagZuBild extends Table {
             throw  new SQLException("Nicht die notwendigen Rechte! Registrieren Sie sich als Autor um Zugriff zu erhalten!");
         }
         else {
-            selectQuery = "SELECT * FROM TagGehoertZuBild";
-            if (s != null && !s.isEmpty()) {
-                selectQuery += " WHERE TagGehoertZuBild.TagTagtext LIKE '%" + s + "%'";
-                selectQuery += " OR TagGehoertZuBild.BildBildID LIKE '%" + s + "%'";
-            }
+            selectQuery = "SELECT Bild.* FROM Bild INNER JOIN Eintrag ON Bild.EintragEintragsID = Eintrag.EintragsID INNER JOIN Seite ON Eintrag.SeiteSeitenID = Seite.SeitenID WHERE Seite.AutorBenutzerE_Mail_Adresse ='" + Application.getInstance().getData().get("loginEmail") + "'";
+
         }
         return selectQuery;
     }
@@ -32,7 +32,7 @@ public class TagZuBild extends Table {
     public String getSelectQueryForRowWithData(Data data) throws SQLException {
         //throw new SQLException(getClass().getName() + ".getSelectQueryForRowWithData(Data) nicht implementiert.");
 
-        String selectQuery = "SELECT * FROM TagGehoertZuBild WHERE TagGehoertZuBild.TagTagtext = '" + data.get("TagGehoertZuBild.TagTagtext") + "' AND TagGehoertZuBild.BildBildID = '" + data.get("TagGehoertZuBild.BildBildID") + "'";
+        String selectQuery = "SELECT * FROM Bild WHERE BildID = '" + data.get("Bild.BildID") + "'";
         return selectQuery;
     }
 
@@ -44,11 +44,24 @@ public class TagZuBild extends Table {
             throw  new SQLException("Nicht die notwendigen Rechte!");
         }
         else {
-            String statement = "INSERT INTO TagGehoertZuBild VALUES (?, ?)";
+            String statement = "INSERT INTO Bild VALUES (?, ?, ?)";
             PreparedStatement preparedStatement = Project.getInstance().getConnection().prepareStatement(statement);
-            preparedStatement.setObject(1, data.get("TagGehoertZuBild.TagTagtext"));
-            preparedStatement.setObject(2, data.get("TagGehoertZuBild.BildBildID"));
-            preparedStatement.executeUpdate();
+            preparedStatement.setObject(1, data.get("Bild.BildID"));
+            preparedStatement.setObject(2, data.get("Bild.Bilddatei"));
+            preparedStatement.setObject(3, data.get("Bild.EintragEintragsID"));
+
+            //Prüfen, ob die eingegebene EintragsID zu einem Eintrag gehört der vom entsprechenden Autor angelegt wurde.
+            String selectQuerySeitenID = "SELECT BildID FROM Bild INNER JOIN Eintrag ON '" + data.get("Bild.EintragEintragsID") + "' = Eintrag.EintragsID INNER JOIN Seite ON Eintrag.SeiteSeitenID = Seite.SeitenID WHERE Seite.AutorBenutzerE_Mail_Adresse = '" + Application.getInstance().getData().get("loginEmail") + "'";
+            Statement statementSeitenID = Project.getInstance().getConnection().createStatement();
+            ResultSet resultSetSeitenID = statementSeitenID.executeQuery(selectQuerySeitenID);
+
+            if (!resultSetSeitenID.next()) {
+                System.out.println(resultSetSeitenID.getRow());
+                throw new SQLException("Der gewählte Eintrag wurde nicht von Ihnen erstellt!");
+            }
+            else {
+                preparedStatement.executeUpdate();
+            }
         }
     }
 

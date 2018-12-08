@@ -32,7 +32,10 @@ public class BilderGPS extends Table {
 
     @Override
     public String getSelectQueryForRowWithData(Data data) throws SQLException {
-        throw new SQLException(getClass().getName() + ".getSelectQueryForRowWithData(Data) nicht implementiert.");
+        //throw new SQLException(getClass().getName() + ".getSelectQueryForRowWithData(Data) nicht implementiert.");
+
+        String selectQuery = "SELECT Bild.BildID, Bild.Bilddatei FROM Bild INNER JOIN BildHatGPSKoordinaten ON Bild.BildID = BildHatGPSKoordinaten.BildBildID WHERE Bild.BildID = '" + data.get("Bild.BildID") + "'";
+        return selectQuery;
     }
 
     @Override

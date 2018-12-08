@@ -13,9 +13,16 @@ public class Tags extends Table {
     public String getSelectQueryForTableWithFilter(String s) throws SQLException {
         //throw new SQLException(getClass().getName() + ".getSelectQueryForTableWithFilter(Data) nicht implementiert.");
 
-        String selectQuery = "SELECT * FROM Tag";
-        if (s != null && !s.isEmpty()) {
-            selectQuery += " WHERE Tag.Tagtext LIKE '%" + s + "%'";
+        String selectQuery;
+
+        if ((Integer) Project.getInstance().getData().get("permission") == 1) {
+            throw  new SQLException("Nicht die notwendigen Rechte! Registrieren Sie sich als Autor um Zugriff zu erhalten!");
+        }
+        else {
+            selectQuery = "SELECT * FROM Tag";
+            if (s != null && !s.isEmpty()) {
+                selectQuery += " WHERE Tag.Tagtext LIKE '%" + s + "%'";
+            }
         }
 
         return selectQuery;

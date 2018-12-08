@@ -6,6 +6,7 @@ import com.alexanderthelen.applicationkit.gui.ViewController;
 import de.hhu.cs.dbs.internship.project.table.account.Account;
 import de.hhu.cs.dbs.internship.project.table.autor.Autor;
 import de.hhu.cs.dbs.internship.project.table.bewertung.Bewertung;
+import de.hhu.cs.dbs.internship.project.table.bilder.Bilder;
 import de.hhu.cs.dbs.internship.project.table.bilderGPS.BilderGPS;
 import de.hhu.cs.dbs.internship.project.table.bilderTags.BilderTags;
 import de.hhu.cs.dbs.internship.project.table.eigeneEintraege.EigeneEintraege;
@@ -79,12 +80,24 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         treeItem.setExpanded(true);
         treeItems.add(treeItem);
 
+        //Bewertung aller Autoren
+        table = new Bewertung();
+        table.setTitle("Bewerten Sie alle Autoren");
+        try {
+            tableViewController = TableViewController.createWithNameAndTable("bewertung", table);
+            tableViewController.setTitle("Autoren bewerten");
+        } catch (IOException e) {
+            tableViewController = null;
+        }
+        subTreeItem = new TreeItem<>(tableViewController);
+        treeItem.getChildren().add(subTreeItem);
+
         //Transaktion
         table = new Transaktion();
-        table.setTitle("Transaktion");
+        table.setTitle("Tätigen Sie Transaktionen");
         try {
             tableViewController = TableViewController.createWithNameAndTable("transaktion", table);
-            tableViewController.setTitle("Transaktion");
+            tableViewController.setTitle("Transaktionen");
         } catch (IOException e) {
             tableViewController = null;
         }
@@ -92,59 +105,59 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         treeItem.setExpanded(true);
         treeItems.add(treeItem);
 
-        //Eigene Seite
+        //Eigenes Tagebuch
         table = new EigeneSeiten();
-        table.setTitle("Alle eigenen Seiten");
+        table.setTitle("Verwalten Sie Ihre eigenes Tagebuch");
         try {
             tableViewController = TableViewController.createWithNameAndTable("eigeneSeite", table);
-            tableViewController.setTitle("Eigene Seiten");
+            tableViewController.setTitle("Eigenes Tagebuch");
         } catch (IOException e) {
             tableViewController = null;
         }
         treeItem = new TreeItem<>(tableViewController);
         treeItem.setExpanded(true);
         treeItems.add(treeItem);
-
-        //Seiten Public (Subtree von EigeneSeiten)
-        table = new SeitenPublic();
-        table.setTitle("Alle öffentliche Seiten");
-        try {
-            tableViewController = TableViewController.createWithNameAndTable("seitenPublic", table);
-            tableViewController.setTitle("Öffentliche Seiten");
-        } catch (IOException e) {
-            tableViewController = null;
-        }
-        subTreeItem = new TreeItem<>(tableViewController);
-        treeItem.getChildren().add(subTreeItem);
-
-        //Seiten gekauft (Subtree von EigeneSeiten)
-        table = new SeitenGekauft();
-        table.setTitle("Alle gekauften Seiten und Einträge");
-        try {
-            tableViewController = TableViewController.createWithNameAndTable("seitenGekauft", table);
-            tableViewController.setTitle("Gekaufte Seiten");
-        } catch (IOException e) {
-            tableViewController = null;
-        }
-        subTreeItem = new TreeItem<>(tableViewController);
-        treeItem.getChildren().add(subTreeItem);
 
         //Eigene Eintraege
         table = new EigeneEintraege();
-        table.setTitle("Alle eigenen Einträge");
+        table.setTitle("Verwalten Sie Ihre eigenen Einträge");
         try {
             tableViewController = TableViewController.createWithNameAndTable("eigeneEintraege", table);
             tableViewController.setTitle("Eigene Einträge");
         } catch (IOException e) {
             tableViewController = null;
         }
+        subTreeItem = new TreeItem<>(tableViewController);
+        treeItem.getChildren().add(subTreeItem);
+
+        //Tagebücher
+        table = new SeitenPublic();
+        table.setTitle("Erkunden Sie alle öffentlichen Tagebücher");
+        try {
+            tableViewController = TableViewController.createWithNameAndTable("seitenPublic", table);
+            tableViewController.setTitle("Öffentliche Tagebücher");
+        } catch (IOException e) {
+            tableViewController = null;
+        }
         treeItem = new TreeItem<>(tableViewController);
         treeItem.setExpanded(true);
         treeItems.add(treeItem);
 
+        //Seiten gekauft (Subtree von Tageücher)
+        table = new SeitenGekauft();
+        table.setTitle("Erkunden Sie alle gekauften Seiten und Einträge");
+        try {
+            tableViewController = TableViewController.createWithNameAndTable("seitenGekauft", table);
+            tableViewController.setTitle("Gekaufte Tagebücher");
+        } catch (IOException e) {
+            tableViewController = null;
+        }
+        subTreeItem = new TreeItem<>(tableViewController);
+        treeItem.getChildren().add(subTreeItem);
+
         //Tags
         table = new Tags();
-        table.setTitle("Tags");
+        table.setTitle("Verwalten Sie alle Tags");
         try {
             tableViewController = TableViewController.createWithNameAndTable("tags", table);
             tableViewController.setTitle("Tags");
@@ -157,7 +170,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 
         //Tag zu Bild (Subtree von Tags)
         table = new TagZuBild();
-        table.setTitle("Tag gehört zu Bild");
+        table.setTitle("Ordnen Sie Tag zu Bild zu");
         try {
             tableViewController = TableViewController.createWithNameAndTable("tagZuBild", table);
             tableViewController.setTitle("Tags zuordnen");
@@ -167,25 +180,12 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         subTreeItem = new TreeItem<>(tableViewController);
         treeItem.getChildren().add(subTreeItem);
 
-        //Bewertung
-        table = new Bewertung();
-        table.setTitle("Bewertung der Autoren");
+        //Bilder hochladen und zuweisen
+        table = new Bilder();
+        table.setTitle("Laden Sie Bilder hoch und ordnen Sie diese Ihren Einträgen zu");
         try {
-            tableViewController = TableViewController.createWithNameAndTable("bewertung", table);
-            tableViewController.setTitle("Bewertung");
-        } catch (IOException e) {
-            tableViewController = null;
-        }
-        treeItem = new TreeItem<>(tableViewController);
-        treeItem.setExpanded(true);
-        treeItems.add(treeItem);
-
-        //Bild mit Tags
-        table = new BilderTags();
-        table.setTitle("Bilder mit Tags suchen");
-        try {
-            tableViewController = TableViewController.createWithNameAndTable("bilderTags", table);
-            tableViewController.setTitle("Bilder mit Tags");
+            tableViewController = TableViewController.createWithNameAndTable("bilder", table);
+            tableViewController.setTitle("Bilder");
         } catch (IOException e) {
             tableViewController = null;
         }
@@ -195,16 +195,27 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 
         //Bilder mit GPS
         table = new BilderGPS();
-        table.setTitle("Bilder mit GPS Koordinaten suchen");
+        table.setTitle("Suchen Sie Bilder mit GPS Koordinaten");
         try {
             tableViewController = TableViewController.createWithNameAndTable("bilderGPS", table);
-            tableViewController.setTitle("Bilder mit GPS");
+            tableViewController.setTitle("Bildersuche mit GPS");
         } catch (IOException e) {
             tableViewController = null;
         }
-        treeItem = new TreeItem<>(tableViewController);
-        treeItem.setExpanded(true);
-        treeItems.add(treeItem);
+        subTreeItem = new TreeItem<>(tableViewController);
+        treeItem.getChildren().add(subTreeItem);
+
+        //Bild mit Tags
+        table = new BilderTags();
+        table.setTitle("Suchen Sie Bilder mit Tags");
+        try {
+            tableViewController = TableViewController.createWithNameAndTable("bilderTags", table);
+            tableViewController.setTitle("Bildersuche mit Tags");
+        } catch (IOException e) {
+            tableViewController = null;
+        }
+        subTreeItem = new TreeItem<>(tableViewController);
+        treeItem.getChildren().add(subTreeItem);
 
         return treeItems;
     }

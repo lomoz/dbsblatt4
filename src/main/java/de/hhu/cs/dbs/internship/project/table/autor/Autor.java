@@ -39,7 +39,6 @@ public class Autor extends Table {
         //throw new SQLException(getClass().getName() + ".insertRowWithData(Data) nicht implementiert.");
 
         if ((Integer) Project.getInstance().getData().get("permission") == 1) {
-            //In Eingabe erstes Feld (AutorE_Mail_Adresse) disablen?
 
             String statement = "INSERT INTO Autor VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = Project.getInstance().getConnection().prepareStatement(statement);
@@ -57,6 +56,7 @@ public class Autor extends Table {
             }
 
             Application.getInstance().getData().put("permission", 2);
+            Application.getInstance().getData().put("loginEmail", data.get("Autor.BenutzerE_Mail_Adresse"));
         }
         else if ((Integer) Project.getInstance().getData().get("permission") == 2) {
             throw new SQLException("Sie sind bereits als Autor und somit auch als Benutzer registriert!");
