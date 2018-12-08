@@ -1,17 +1,22 @@
 package de.hhu.cs.dbs.internship.project.table.tagZuBild;
 
+import com.alexanderthelen.applicationkit.Application;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 import de.hhu.cs.dbs.internship.project.Project;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class TagZuBild extends Table {
 
     @Override
     public String getSelectQueryForTableWithFilter(String s) throws SQLException {
         //throw new SQLException(getClass().getName() + ".getSelectQueryForTableWithFilter(Data) nicht implementiert.");
+
+        //Nur selbst zugeordnete Bilder anzeigen
 
         String selectQuery;
 
@@ -48,7 +53,20 @@ public class TagZuBild extends Table {
             PreparedStatement preparedStatement = Project.getInstance().getConnection().prepareStatement(statement);
             preparedStatement.setObject(1, data.get("TagGehoertZuBild.TagTagtext"));
             preparedStatement.setObject(2, data.get("TagGehoertZuBild.BildBildID"));
-            preparedStatement.executeUpdate();
+
+            //Prüfen, ob die gewählte BildID vom entsprechenden Autor angelegt wurde
+            String selectQuerySeitenID = "SELECT BildBildID FROM TagGehoertZuBild INNER JOIN Bild ON '" + data.get("TagGehoertZuBild.BildBildID") + "' = Bild.BildID INNER JOIN Eintrag ON Bild.EintragEintragsID = Eintrag.EintragsID INNER JOIN Seite ON Eintrag.SeiteSeitenID = Seite.SeitenID WHERE Seite.AutorBenutzerE_Mail_Adresse ='" + Application.getInstance().getData().get("loginEmail") + "'";
+            Statement statementSeitenID = Project.getInstance().getConnection().createStatement();
+            ResultSet resultSetSeitenID = statementSeitenID.executeQuery(selectQuerySeitenID);
+
+            if (!resultSetSeitenID.next()) {
+                System.out.println(resultSetSeitenID.getRow());
+                throw new SQLException("Das gewählte Bild wurde nicht von Ihnen hinzugefügt!");
+            }
+            else {
+                preparedStatement.executeUpdate();
+
+            }
         }
     }
 
