@@ -24,11 +24,7 @@ public class TagZuBild extends Table {
             throw  new SQLException("Nicht die notwendigen Rechte! Registrieren Sie sich als Autor um Zugriff zu erhalten!");
         }
         else {
-            selectQuery = "SELECT * FROM TagGehoertZuBild";
-            if (s != null && !s.isEmpty()) {
-                selectQuery += " WHERE TagGehoertZuBild.TagTagtext LIKE '%" + s + "%'";
-                selectQuery += " OR TagGehoertZuBild.BildBildID LIKE '%" + s + "%'";
-            }
+            selectQuery = "SELECT TagGehoertZuBild.* FROM TagGehoertZuBild INNER JOIN Bild ON TagGehoertZuBild.BildBildID = Bild.BildID INNER JOIN Eintrag ON Bild.EintragEintragsID = Eintrag.EintragsID INNER JOIN Seite ON Eintrag.SeiteSeitenID = Seite.SeitenID WHERE Seite.AutorBenutzerE_Mail_Adresse = '" + Application.getInstance().getData().get("loginEmail") + "'";
         }
         return selectQuery;
     }
